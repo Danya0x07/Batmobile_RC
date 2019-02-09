@@ -8,9 +8,8 @@ enum Commands {
     WINCH_DROP,
     WINCH_STOP,
     TARAN_ON,
-    TARAN_OFF,
     CRUISE_ON,
-    CRUISE_OFF,
+    NORMAL_MODE,
     SET_FADE
 };
 

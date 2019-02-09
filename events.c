@@ -10,6 +10,14 @@ static uint8_t direction;
 static uint8_t x_spd, y_spd;
 static uint8_t x_abs, y_abs;
 
+static void clear_mode(void)
+{
+    TML_led_off();
+    CML_led_off();
+    UART_send(NORMAL_MODE);
+    mode = NORMAL;
+}
+
 void handle_btn_events(void)
 {
     // потянуть лебёдку
@@ -35,26 +43,22 @@ void handle_btn_events(void)
     // режим круиза
     if(pressed(&btn_cruise)) {
         if(mode != CRUISE) {
+            if(mode == TARAN)
+                clear_mode();
             mode = CRUISE;
             UART_send(CRUISE_ON);
             CML_led_on();
-        } else {
-            mode = NORMAL;
-            UART_send(CRUISE_OFF);
-            CML_led_off();
-        }
+        } else clear_mode();
     }
     // режим тарана
     if(pressed(&btn_taran)) {
         if(mode != TARAN) {
+            if(mode == CRUISE)
+                clear_mode();
             mode = TARAN;
             UART_send(TARAN_ON);
             TML_led_on();
-        } else {
-            mode = NORMAL;
-            UART_send(TARAN_OFF);
-            TML_led_off();
-        }
+        } else clear_mode();
     }
 }
 

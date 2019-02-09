@@ -24,6 +24,10 @@ void set_batcar_speeds(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
 {
     UART_send(SET_SPEED);
     switch(dir) {
+        case NONE:
+            UART_send(0);
+            UART_send(0);
+            break;
         case RIGHTFRONT:
         case LEFTBACK:
             UART_send(speeds[y_abs]);
@@ -52,12 +56,12 @@ void refresh_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
     if(dir != dir_last) {
         set_batcar_direction(dir);
         dir_last = dir;
-    }
+    } 
     if(x_abs != x_abs_last || y_abs != y_abs_last) {
         set_batcar_speeds(dir, x_abs, y_abs);
         x_abs_last = x_abs;
         y_abs_last = y_abs;
-    }
+    } 
 }
 
 void refresh_cruising_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
@@ -65,6 +69,10 @@ void refresh_cruising_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
     if(x_abs != x_abs_last || y_abs != y_abs_last) {
         UART_send(SET_FADE);
         switch(dir) {
+            case NONE:
+                UART_send(0);
+                UART_send(0);
+                break;
             case FORWARD:
                 UART_send(fades[y_abs]);
                 UART_send(fades[y_abs]);
