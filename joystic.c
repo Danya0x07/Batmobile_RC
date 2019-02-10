@@ -11,7 +11,9 @@ uint16_t joyX_get(void)
     ADMUX |= JOY_X_BITS;
     ADCSRA |= _BV(ADSC);
     while(ADCSRA & _BV(ADSC));
-    return ADC * ACCURACY / 1023;
+    // Инверсия осей для корректного определения
+    // направления отклонения после разворота
+    return ACCURACY - ADC * ACCURACY / 1023;
 }
 
 uint16_t joyY_get(void)
@@ -20,6 +22,8 @@ uint16_t joyY_get(void)
     ADMUX |= JOY_Y_BITS;
     ADCSRA |= _BV(ADSC);
     while(ADCSRA & _BV(ADSC));
+    // Инверсия осей для корректного определения
+    // направления отклонения после разворота
     return ACCURACY - ADC * ACCURACY / 1023;
 }
 

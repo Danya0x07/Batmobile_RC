@@ -3,8 +3,10 @@
 #include <avr/io.h>
 
 #define admux_clear()   ADMUX &= ~(_BV(MUX3) | _BV(MUX2)| _BV(MUX1) | _BV(MUX0))
-#define JOY_X_BITS  (_BV(MUX0))
-#define JOY_Y_BITS  0
+// Специфика конструкции пульта: пришлось
+// развернуть на 90 градусов
+#define JOY_Y_BITS  (_BV(MUX0))
+#define JOY_X_BITS  0
 
 #define ACCURACY    15
 #define S1_L_LIM    5
