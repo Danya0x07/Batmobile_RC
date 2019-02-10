@@ -43,11 +43,11 @@ uint8_t joy_direction(uint8_t x, uint8_t y)
     } else {
         if(x > S1_R_LIM) {
             if(y > S1_R_LIM) return RIGHTFRONT;
-            else if(y < S1_L_LIM) return LEFTBACK;
+            else if(y < S1_L_LIM) return RIGHTBACK;
             else return RIGHTWARD;
         } else if(x < S1_L_LIM) {
             if(y > S1_R_LIM) return LEFTFRONT;
-            else if(y < S1_L_LIM) return RIGHTBACK;
+            else if(y < S1_L_LIM) return LEFTBACK;
             else return LEFTWARD;
         }
     }
@@ -58,10 +58,10 @@ uint8_t joy_inverse(uint8_t dir)
     switch(dir) {
         case FORWARD: return BACKWARD;
         case BACKWARD: return FORWARD;
-        case LEFTFRONT: return LEFTBACK;
-        case LEFTBACK: return LEFTFRONT;
-        case RIGHTFRONT: return RIGHTBACK;
-        case RIGHTBACK: return RIGHTFRONT;
+        case LEFTFRONT: return RIGHTBACK;
+        case LEFTBACK: return RIGHTFRONT;
+        case RIGHTFRONT: return LEFTBACK;
+        case RIGHTBACK: return LEFTFRONT;
         default: return dir;
     }
 }
