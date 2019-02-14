@@ -71,11 +71,11 @@ void handle_joy_events(void)
     y_abs = joy_abs_pos(y_spd);
     update_spd_leds(x_abs, y_abs);
     if(mode == CRUISE) {
-        refresh_cruising_batcar(direction, x_abs, y_abs);
+        refresh_acceleration(direction, x_abs, y_abs);
     } else {
         if(mode == TARAN)
             direction = joy_inverse(direction);
-        refresh_batcar(direction, x_abs, y_abs);
+        refresh_movement(direction, x_abs, y_abs);
     }
     
 }

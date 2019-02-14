@@ -3,7 +3,7 @@
 #include "joystic.h"
 
 static const uint8_t speeds[4] = {0, 85, 170, 255};
-static const int8_t fades[4] = {0, 5, 15, 25};
+static const int8_t fades[4] = {0, 10, 20, 30};
 static uint8_t x_abs_last = 0, y_abs_last = 0;
 static uint8_t dir_last = NONE;
 
@@ -11,10 +11,14 @@ void set_batcar_direction(uint8_t dir)
 {
     UART_send(SET_DIRECTION);
     switch(dir) {
-        case RIGHTFRONT: UART_send(RIGHTWARD); break;
-        case LEFTFRONT:  UART_send(LEFTWARD);  break;
-        case RIGHTBACK:  UART_send(LEFTWARD);  break;
-        case LEFTBACK:   UART_send(RIGHTWARD); break;
+        case RIGHTFRONT:
+        case LEFTBACK:
+            UART_send(RIGHTWARD);
+            break;
+        case LEFTFRONT: 
+        case RIGHTBACK:
+            UART_send(LEFTWARD);
+            break;
         default:
             UART_send(dir);
     }
@@ -28,14 +32,14 @@ void set_batcar_speeds(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
             UART_send(0);
             UART_send(0);
             break;
-        case RIGHTFRONT:
+        case LEFTFRONT:
         case LEFTBACK:
             UART_send(speeds[y_abs]);
-            UART_send(speeds[2]);
+            UART_send(speeds[1]);
             break;
-        case LEFTFRONT:
+        case RIGHTFRONT:
         case RIGHTBACK:
-            UART_send(speeds[2]);
+            UART_send(speeds[1]);
             UART_send(speeds[y_abs]);
             break;
         case FORWARD:
@@ -51,7 +55,7 @@ void set_batcar_speeds(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
     }
 }
 
-void refresh_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
+void refresh_movement(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
 {
     if(dir != dir_last) {
         set_batcar_direction(dir);
@@ -64,7 +68,7 @@ void refresh_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
     } 
 }
 
-void refresh_cruising_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
+void refresh_acceleration(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
 {
     if(x_abs != x_abs_last || y_abs != y_abs_last) {
         UART_send(SET_FADE);

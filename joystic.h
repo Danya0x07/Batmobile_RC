@@ -9,6 +9,8 @@
 #define JOY_X_BITS  0
 
 #define ACCURACY    15
+#define CALIBRAT_X  (1)  // Подгонка значения по X
+#define CALIBRAT_Y  (1)  // Подгонка значения по Y
 #define S1_L_LIM    5
 #define S1_R_LIM    10  
 #define S2_L_LIM    3

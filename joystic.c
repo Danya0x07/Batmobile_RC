@@ -13,7 +13,7 @@ uint16_t joyX_get(void)
     while(ADCSRA & _BV(ADSC));
     // Инверсия осей для корректного определения
     // направления отклонения после разворота
-    return ACCURACY - ADC * ACCURACY / 1023;
+    return ACCURACY - (ADC + CALIBRAT_X) * ACCURACY / 1023;
 }
 
 uint16_t joyY_get(void)
@@ -24,16 +24,16 @@ uint16_t joyY_get(void)
     while(ADCSRA & _BV(ADSC));
     // Инверсия осей для корректного определения
     // направления отклонения после разворота
-    return ACCURACY - ADC * ACCURACY / 1023;
+    return ACCURACY - (ADC + CALIBRAT_Y) * ACCURACY / 1023;
 }
 
 uint8_t joy_abs_pos(uint8_t p)
 {
-    if(p <= S3_L_LIM || p >= S3_R_LIM)
+    if(p < S3_L_LIM || p > S3_R_LIM)
         return 3;
-    else if(p <= S2_L_LIM || p >= S2_R_LIM)
+    else if(p < S2_L_LIM || p > S2_R_LIM)
         return 2;
-    else if(p <= S1_L_LIM || p >= S1_R_LIM)
+    else if(p < S1_L_LIM || p > S1_R_LIM)
         return 1;
     else return 0;
 }
@@ -55,6 +55,8 @@ uint8_t joy_direction(uint8_t x, uint8_t y)
             else return LEFTWARD;
         }
     }
+    // чтобы компилятор не ругался
+    return 0;
 }
 
 uint8_t joy_inverse(uint8_t dir)
