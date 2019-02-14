@@ -84,14 +84,14 @@ void refresh_cruising_batcar(uint8_t dir, uint8_t x_abs, uint8_t y_abs)
             case LEFTWARD:
             case LEFTFRONT:
             case LEFTBACK:
-                UART_send(-fades[y_abs]);
-                UART_send(fades[y_abs]);
+                UART_send(-fades[x_abs]);
+                UART_send(fades[x_abs]);
                 break;
             case RIGHTWARD:
             case RIGHTFRONT:
             case RIGHTBACK:
-                UART_send(fades[y_abs]);
-                UART_send(-fades[y_abs]);
+                UART_send(fades[x_abs]);
+                UART_send(-fades[x_abs]);
                 break;
         }
         x_abs_last = x_abs;
